@@ -589,6 +589,47 @@ h1 span {
         transition-duration: .01ms !important;
     }
 }
+
+    .viewer-stage {
+    flex: 1;
+    min-height: 0;
+    position: relative;
+    overflow: hidden;
+    padding: 0;
+    display: block;
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
+
+.slide-track {
+    display: flex;
+    width: 200%;
+    height: 100%;
+    transform: translateX(0);
+    will-change: transform;
+}
+
+.slide-panel {
+    flex: 0 0 50%;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 12px;
+}
+
+.slide-panel img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-drag: none;
+}
 </style>
 </head>
 
@@ -649,13 +690,14 @@ h1 span {
 
     <div class="viewer-stage" id="viewerStage">
 
-        <button class="slide-btn prev-btn" id="prevBtn"
-                aria-label="Previous menu">&#8249;</button>
-
+        <div class="slide-track" id="slideTrack">
+    <div class="slide-panel">
         <img id="viewerImage" src="" alt="Restaurant menu">
-
-        <button class="slide-btn next-btn" id="nextBtn"
-                aria-label="Next menu">&#8250;</button>
+    </div>
+    <div class="slide-panel">
+        <img id="nextImage" src="" alt="Next menu">
+    </div>
+</div>
 
     </div>
 
