@@ -375,18 +375,18 @@ h1 span, .section-heading h2 span, .viewer-brand strong span { color: var(--oran
 
 .slide-track {
     display: flex;
-    width: 200%;
+    width: 300%;
     height: 100%;
-    transform: translate3d(0,0,0);
+    transform: translate3d(-33.333333%, 0, 0);
     will-change: transform;
 }
 
 .slide-panel {
     display: flex;
-    flex: 0 0 50%;
+    flex: 0 0 33.333333%;
     align-items: center;
     justify-content: center;
-    width: 50%;
+    width: 33.333333%;
     height: 100%;
     min-width: 0;
     padding: 12px;
@@ -531,10 +531,13 @@ h1 span, .section-heading h2 span, .viewer-brand strong span { color: var(--oran
     <div class="viewer-stage" id="viewerStage">
         <div class="slide-track" id="slideTrack">
             <div class="slide-panel">
+                <img id="prevImage" src="" alt="Previous menu">
+            </div>
+            <div class="slide-panel">
                 <img id="viewerImage" src="" alt="Restaurant menu">
             </div>
             <div class="slide-panel">
-                <img id="nextImage" src="" alt="Adjacent menu">
+                <img id="nextImage" src="" alt="Next menu">
             </div>
         </div>
     </div>
@@ -565,6 +568,7 @@ h1 span, .section-heading h2 span, .viewer-brand strong span { color: var(--oran
     const grid = document.getElementById('menuGrid');
     const viewer = document.getElementById('viewer');
     const viewerImage = document.getElementById('viewerImage');
+    const prevImage = document.getElementById('prevImage');
     const nextImage = document.getElementById('nextImage');
     const viewerTitle = document.getElementById('viewerTitle');
     const counter = document.getElementById('counter');
@@ -645,17 +649,25 @@ h1 span, .section-heading h2 span, .viewer-brand strong span { color: var(--oran
     }
 
     function prepareImages() {
+        const previousIndex = (currentIndex - 1 + menus.length) % menus.length;
+        const nextIndex = (currentIndex + 1) % menus.length;
+
+        prevImage.src = menus[previousIndex].image;
+        prevImage.alt = menus[previousIndex].title;
+
         viewerImage.src = menus[currentIndex].image;
         viewerImage.alt = menus[currentIndex].title;
-        nextImage.src = menus[(currentIndex + 1) % menus.length].image;
-        nextImage.alt = menus[(currentIndex + 1) % menus.length].title;
+
+        nextImage.src = menus[nextIndex].image;
+        nextImage.alt = menus[nextIndex].title;
     }
 
     function setTrackPosition(offset, animate = false) {
         slideTrack.style.transition = animate
             ? `transform ${ANIMATION_DURATION}ms cubic-bezier(.22,.61,.36,1)`
             : 'none';
-        slideTrack.style.transform = `translate3d(calc(-50% + ${offset}px), 0, 0)`;
+        // Three equal panels: keep the current menu centered at - one panel width.
+        slideTrack.style.transform = `translate3d(calc(-33.333333% + ${offset}px), 0, 0)`;
     }
 
     function resetTrack(animate = true) {
@@ -681,6 +693,8 @@ h1 span, .section-heading h2 span, .viewer-brand strong span { color: var(--oran
         isAnimating = true;
 
         const width = viewerStage.clientWidth;
+        // Track contains previous, current and next panels.
+        // Slide left to reveal next; slide right to reveal previous.
         setTrackPosition(direction === 1 ? -width : width, true);
 
         clearTimeout(animationTimer);
@@ -743,13 +757,8 @@ h1 span, .section-heading h2 span, .viewer-brand strong span { color: var(--oran
 
         dragX = dx;
 
-        // Keep the adjacent panel in the direction the user is dragging.
-        if (dx < 0) {
-            nextImage.src = menus[(currentIndex + 1) % menus.length].image;
-        } else {
-            nextImage.src = menus[(currentIndex - 1 + menus.length) % menus.length].image;
-        }
-
+        // Both neighboring panels are already loaded. Dragging left reveals
+        // the next panel; dragging right reveals the previous panel.
         setTrackPosition(dx, false);
     });
 
