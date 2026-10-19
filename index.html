@@ -5,224 +5,172 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Urban Seoul Restaurant Menu</title>
 
-<!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Gowun+Dodum&display=swap" rel="stylesheet">
 
 <style>
-    body {
-        margin: 0;
-        font-family: 'Gowun Dodum', Arial, sans-serif;
-        color: #fff;
-        overflow-x: hidden;
-        position: relative;
-    }
+body {
+    margin: 0;
+    font-family: 'Gowun Dodum', Arial, sans-serif;
+    color: #fff;
+    overflow-x: hidden;
+    position: relative;
+    background: #2e2e2e;
+}
 
-    /* Normal fixed logo background */
-    body::before {
+body::before {
     content: "";
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    height: 100%;
-
-    /* GRAY BACKGROUND */
-    background-color: #2e2e2e; /* nice soft gray */
-
-    /* LOGO */
+    inset: 0;
     background-image: url('logo.png');
     background-repeat: no-repeat;
-    background-position: center center;
+    background-position: center;
     background-size: contain;
-
     z-index: 0;
     pointer-events: none;
 }
 
-    /* TITLE */
+header {
+    text-align: center;
+    padding: 25px 15px;
+    color: #FF8C00;
+    font-family: 'Russo One', sans-serif;
+    font-size: 36px;
+    font-weight: 900;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    position: relative;
+    z-index: 1;
+}
+
+.menu-container {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+}
+
+.card {
+    background: rgba(0,0,0,0.6);
+    border-radius: 14px;
+    overflow: hidden;
+    border: 2px solid orange;
+    transition: transform 0.25s ease, opacity 0.6s ease;
+    cursor: pointer;
+    max-width: 500px;
+    width: 90%;
+    opacity: 0;
+    transform: translateY(30px);
+}
+
+.card:hover {
+    transform: scale(1.02);
+}
+
+.card img {
+    width: 100%;
+    display: block;
+}
+
+.card-title {
+    padding: 12px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 18px;
+    color: orange;
+    font-family: 'Russo One', sans-serif;
+}
+
+#viewer {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.95);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    cursor: zoom-out;
+}
+
+#viewer img {
+    max-width: 95%;
+    max-height: 95%;
+    width: auto;
+    height: auto;
+    object-fit: contain;
+    border-radius: 12px;
+}
+
+footer {
+    text-align: center;
+    padding: 20px;
+    color: #aaa;
+    margin-top: 30px;
+    font-size: 14px;
+    letter-spacing: 0.5px;
+    position: relative;
+    z-index: 1;
+}
+
+@media(max-width: 480px) {
     header {
-        text-align: center;
-        padding: 25px 15px;
-        color: #FF8C00; /* dark orange text */
-        font-family: 'Russo One', sans-serif;
-        font-size: 36px;
-        font-weight: 900;
-        letter-spacing: 1.5px;
-        text-transform: uppercase;
-        position: relative;
-        z-index: 1; /* above background */
+        font-size: 28px;
     }
 
-    /* MENU CONTAINER */
-    .menu-container {
-        padding: 20px;
-        display: flex;
-        flex-direction: column;
-        gap: 25px;
-        align-items: center;
-        position: relative;
-        z-index: 1; /* above background */
-    }
-
-    /* MENU CARDS */
-    .card {
-        background: rgba(0,0,0,0.6); /* slightly transparent for readability */
-        border-radius: 14px;
-        overflow: hidden;
-        border: 2px solid orange;
-        transition: transform 0.25s ease, opacity 0.6s ease;
-        cursor: pointer;
-        max-width: 500px;
-        width: 90%;
-        opacity: 0;
-        transform: translateY(30px);
-        position: relative;
-        z-index: 1;
-    }
-
-    .card:hover {
-        transform: scale(1.02);
-    }
-
-    .card img {
-        width: 100%;
-        display: block;
-        border-radius: 12px;
-    }
-
-    /* MENU NAMES */
     .card-title {
-        padding: 12px;
-        text-align: center;
-        font-weight: 600;
-        font-size: 18px;
-        color: orange;
-        font-family: 'Russo One', sans-serif;
+        font-size: 16px;
     }
-
-    /* FULLSCREEN VIEWER */
-    #viewer {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.95);
-        display: none;
-        justify-content: center;
-        align-items: center;
-        z-index: 9999;
-    }
-
-    #viewer img {
-        max-width: 95%;
-        max-height: 95%;
-        width: auto;
-        height: auto;
-        object-fit: contain;
-        border-radius: 12px;
-        display: block;
-        margin: auto;
-    }
-
-    /* FOOTER */
-    footer {
-        text-align: center;
-        padding: 20px;
-        color: #aaa;
-        margin-top: 30px;
-        font-size: 14px;
-        letter-spacing: 0.5px;
-        position: relative;
-        z-index: 1;
-    }
-
-    /* RESPONSIVE FOR MOBILE */
-    @media(max-width: 480px){
-        header {
-            font-size: 28px;
-        }
-        .card-title {
-            font-size: 16px;
-        }
-    }
+}
 </style>
 </head>
+
 <body>
 
 <header>Urban Seoul Restaurant Menu</header>
 
 <div class="menu-container">
 
-    <div class="card" onclick="openViewer('1MenuCover.png')">
-        <img src="1MenuCover.png" alt="">
-        <div class="card-title">Menu Cover</div>
+    <div class="card" onclick="openViewer('Menu1.png')">
+        <img src="Menu1.png" alt="Urban Seoul Menu 1">
+        <div class="card-title">Menu 1</div>
     </div>
 
-    <div class="card" onclick="openViewer('2RiceMealMenu.png')">
-        <img src="2RiceMealMenu.png" alt="">
-        <div class="card-title">Rice Meal Menu</div>
+    <div class="card" onclick="openViewer('Menu2.png')">
+        <img src="Menu2.png" alt="Urban Seoul Menu 2">
+        <div class="card-title">Menu 2</div>
     </div>
 
-    <div class="card" onclick="openViewer('3AppetizerMenu.png')">
-        <img src="3AppetizerMenu.png" alt="">
-        <div class="card-title">Appetizer Menu</div>
+    <div class="card" onclick="openViewer('Menu3.png')">
+        <img src="Menu3.png" alt="Urban Seoul Menu 3">
+        <div class="card-title">Menu 3</div>
     </div>
 
-    <div class="card" onclick="openViewer('4KoreanMenu.png')">
-        <img src="4KoreanMenu.png" alt="">
-        <div class="card-title">Korean Menu</div>
+    <div class="card" onclick="openViewer('Menu4.png')">
+        <img src="Menu4.png" alt="Urban Seoul Menu 4">
+        <div class="card-title">Menu 4</div>
     </div>
 
-    <div class="card" onclick="openViewer('5SaladMenu.png')">
-        <img src="5SaladMenu.png" alt="">
-        <div class="card-title">Salad Menu</div>
+    <div class="card" onclick="openViewer('Menu5.png')">
+        <img src="Menu5.png" alt="Urban Seoul Menu 5">
+        <div class="card-title">Menu 5</div>
     </div>
 
-    <div class="card" onclick="openViewer('6AllYouCanEat.png')">
-        <img src="6AllYouCanEat.png" alt="">
-        <div class="card-title">All You Can Eat</div>
-    </div>
-
-    <div class="card" onclick="openViewer('7Drinks.png')">
-        <img src="7Drinks.png" alt="">
-        <div class="card-title">Drinks</div>
-    </div>
-
-    <div class="card" onclick="openViewer('8IceCreamMenu.png')">
-        <img src="8IceCreamMenu.png" alt="">
-        <div class="card-title">Ice Cream Menu</div>
-    </div>
-
-    <div class="card" onclick="openViewer('9LiqourMenu.png')">
-        <img src="9LiqourMenu.png" alt="">
-        <div class="card-title">Liquor Menu</div>
-    </div>
-
-    <div class="card" onclick="openViewer('10BucketMenu.png')">
-        <img src="10BucketMenu.png" alt="">
-        <div class="card-title">Bucket Menu</div>
-    </div>
-
-    <div class="card" onclick="openViewer('11KoreanProduct.png')">
-        <img src="11KoreanProduct.png" alt="">
-        <div class="card-title">Korean Product</div>
-    </div>
-
-    <div class="card" onclick="openViewer('12LastPage.png')">
-        <img src="12LastPage.png" alt="">
-        <div class="card-title">Last Page</div>
+    <div class="card" onclick="openViewer('Menu6.png')">
+        <img src="Menu6.png" alt="Urban Seoul Menu 6">
+        <div class="card-title">Menu 6</div>
     </div>
 
 </div>
 
-<!-- Fullscreen Viewer -->
 <div id="viewer" onclick="closeViewer()">
-    <img id="viewerImage" src="">
+    <img id="viewerImage" src="" alt="Full Menu">
 </div>
 
-<footer>© 2025 Urban Seoul Restaurant • All Rights Reserved</footer>
+<footer>
+    © 2026 Urban Seoul Restaurant • All Rights Reserved
+</footer>
 
 <script>
 function openViewer(image) {
@@ -232,19 +180,20 @@ function openViewer(image) {
 
 function closeViewer() {
     document.getElementById('viewer').style.display = 'none';
+    document.getElementById('viewerImage').src = '';
 }
 
-// Fade-in animation for cards on scroll
 const cards = document.querySelectorAll('.card');
+
 const observer = new IntersectionObserver(entries => {
     entries.forEach(entry => {
-        if(entry.isIntersecting){
+        if (entry.isIntersecting) {
             entry.target.style.opacity = 1;
             entry.target.style.transform = 'translateY(0)';
             observer.unobserve(entry.target);
         }
     });
-},{ threshold: 0.2 });
+}, { threshold: 0.2 });
 
 cards.forEach(card => observer.observe(card));
 </script>
