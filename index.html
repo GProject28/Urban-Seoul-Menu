@@ -834,4 +834,16 @@ viewerStage.addEventListener('touchend', event => {
     const dx = touchEndX - touchStartX;
     const dy = touchEndY - touchStartY;
 
-    if (Math.abs(dx)
+    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
+        if (dx < 0) {
+            nextSlide();
+        } else {
+            prevSlide();
+        }
+    }
+}, { passive: true });
+</script>
+
+</body>
+</html>
+```
