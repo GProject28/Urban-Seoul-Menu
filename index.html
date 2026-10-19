@@ -385,9 +385,19 @@ h1 span {
     align-items: center;
     justify-content: center;
     position: relative;
-    padding: 12px 80px;
+    padding: 12px 60px;
     overflow: hidden;
-    touch-action: pan-y;
+
+    /* Allow horizontal swipe detection */
+    touch-action: pan-y pinch-zoom;
+    overscroll-behavior: contain;
+}
+
+.viewer-stage img {
+    pointer-events: none;
+    user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
 }
 
 .viewer-stage img {
@@ -814,32 +824,42 @@ document.addEventListener('keydown', event => {
     if (event.key === 'ArrowLeft') prevSlide();
 });
 
-/* TOUCH / MOBILE SWIPE */
-viewerStage.addEventListener('touchstart', event => {
-    touchStartX = event.changedTouches[0].screenX;
-    touchStartY = event.changedTouches[0].screenY;
-    touchEndX = touchStartX;
-    touchEndY = touchStartY;
+/* MOBILE SWIPE - IMPROVED */
+let startX = 0;
+let startY = 0;
+let startTime = 0;
+
+viewerStage.addEventListener('touchstart', function(event) {
+    if (event.touches.length !== 1) return;
+
+    startX = event.touches[0].clientX;
+    startY = event.touches[0].clientY;
+    startTime = Date.now();
 }, { passive: true });
 
-viewerStage.addEventListener('touchmove', event => {
-    touchEndX = event.changedTouches[0].screenX;
-    touchEndY = event.changedTouches[0].screenY;
-}, { passive: true });
+viewerStage.addEventListener('touchend', function(event) {
+    if (event.changedTouches.length !== 1) return;
 
-viewerStage.addEventListener('touchend', event => {
-    touchEndX = event.changedTouches[0].screenX;
-    touchEndY = event.changedTouches[0].screenY;
+    const endX = event.changedTouches[0].clientX;
+    const endY = event.changedTouches[0].clientY;
 
-    const dx = touchEndX - touchStartX;
-    const dy = touchEndY - touchStartY;
+    const deltaX = endX - startX;
+    const deltaY = endY - startY;
+    const duration = Date.now() - startTime;
 
-    if (Math.abs(dx) > 50 && Math.abs(dx) > Math.abs(dy)) {
-        if (dx < 0) {
-            nextSlide();
-        } else {
-            prevSlide();
-        }
+    // Ignore vertical scrolling and tiny movements
+    if (
+        Math.abs(deltaX) < 45 ||
+        Math.abs(deltaX) < Math.abs(deltaY) * 1.2 ||
+        duration > 800
+    ) {
+        return;
+    }
+
+    if (deltaX < 0) {
+        nextSlide(); // Swipe left = next menu
+    } else {
+        prevSlide(); // Swipe right = previous menu
     }
 }, { passive: true });
 </script>
