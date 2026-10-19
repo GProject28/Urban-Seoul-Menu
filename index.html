@@ -1,126 +1,583 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Urban Seoul Restaurant Menu</title>
+
+<title>Urban Seoul Restaurant | Our Menu</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Gowun+Dodum&display=swap" rel="stylesheet">
 
 <style>
+:root {
+    --orange: #ff8c00;
+    --gold: #ffb347;
+    --dark: #111111;
+    --panel: #1b1b1b;
+    --white: #ffffff;
+}
+
+* {
+    box-sizing: border-box;
+}
+
 body {
     margin: 0;
-    font-family: 'Gowun Dodum', Arial, sans-serif;
-    color: #fff;
+    font-family: 'Gowun Dodum', sans-serif;
+    color: var(--white);
+    background:
+        radial-gradient(ellipse at top, #37302a 0%, #171717 45%, #0c0c0c 100%);
+    min-height: 100vh;
     overflow-x: hidden;
+}
+
+button {
+    font: inherit;
+}
+
+/* HEADER */
+
+.hero {
     position: relative;
-    background: #2e2e2e;
-}
-
-body::before {
-    content: "";
-    position: fixed;
-    inset: 0;
-    background-image: url('logo.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    background-size: contain;
-    z-index: 0;
-    pointer-events: none;
-}
-
-header {
     text-align: center;
-    padding: 25px 15px;
-    color: #FF8C00;
-    font-family: 'Russo One', sans-serif;
-    font-size: 36px;
-    font-weight: 900;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    position: relative;
-    z-index: 1;
-}
-
-.menu-container {
-    padding: 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 25px;
-    align-items: center;
-    position: relative;
-    z-index: 1;
-}
-
-.card {
-    background: rgba(0,0,0,0.6);
-    border-radius: 14px;
+    padding: 42px 20px 35px;
     overflow: hidden;
-    border: 2px solid orange;
-    transition: transform 0.25s ease, opacity 0.6s ease;
-    cursor: pointer;
-    max-width: 500px;
-    width: 90%;
-    opacity: 0;
-    transform: translateY(30px);
+    border-bottom: 1px solid rgba(255,140,0,.3);
+    background: linear-gradient(180deg, rgba(0,0,0,.8), rgba(20,20,20,.3));
 }
 
-.card:hover {
-    transform: scale(1.02);
+.hero::before {
+    content: "";
+    position: absolute;
+    width: 300px;
+    height: 300px;
+    border-radius: 50%;
+    background: rgba(255,140,0,.09);
+    filter: blur(70px);
+    top: -180px;
+    left: 50%;
+    transform: translateX(-50%);
 }
 
-.card img {
+.brand {
+    position: relative;
+    z-index: 1;
+}
+
+.logo-wrap {
+    width: 112px;
+    height: 112px;
+    margin: 0 auto 18px;
+    padding: 8px;
+    border: 2px solid var(--orange);
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 0 30px rgba(255,140,0,.18);
+    overflow: hidden;
+}
+
+.logo-wrap img {
     width: 100%;
-    display: block;
+    height: 100%;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
-.card-title {
-    padding: 12px;
-    text-align: center;
-    font-weight: 600;
-    font-size: 18px;
-    color: orange;
+.eyebrow {
+    color: var(--gold);
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 5px;
+    margin-bottom: 10px;
+}
+
+h1 {
     font-family: 'Russo One', sans-serif;
+    text-transform: uppercase;
+    font-size: clamp(27px, 5vw, 48px);
+    line-height: 1.2;
+    letter-spacing: 1px;
+    margin: 0;
+    color: #fff;
+    text-shadow: 0 3px 20px rgba(0,0,0,.5);
 }
 
-#viewer {
-    position: fixed;
+h1 span {
+    color: var(--orange);
+}
+
+.subtitle {
+    color: #c8c8c8;
+    font-size: 14px;
+    margin-top: 13px;
+    letter-spacing: 1px;
+}
+
+.orange-line {
+    width: 65px;
+    height: 3px;
+    margin: 22px auto 0;
+    border-radius: 10px;
+    background: linear-gradient(90deg, var(--orange), var(--gold));
+}
+
+/* SECTION */
+
+.section {
+    width: min(1200px, 100%);
+    margin: auto;
+    padding: 36px 22px 55px;
+}
+
+.section-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    gap: 15px;
+    margin-bottom: 24px;
+}
+
+.section-heading h2 {
+    font-family: 'Russo One', sans-serif;
+    font-size: clamp(20px, 3vw, 28px);
+    margin: 0;
+    font-weight: normal;
+}
+
+.section-heading h2 span {
+    color: var(--orange);
+}
+
+.section-heading p {
+    color: #999;
+    font-size: 12px;
+    margin: 7px 0 0;
+}
+
+.menu-count {
+    color: var(--gold);
+    border: 1px solid rgba(255,140,0,.35);
+    background: rgba(255,140,0,.07);
+    border-radius: 30px;
+    padding: 8px 12px;
+    font-size: 12px;
+    white-space: nowrap;
+}
+
+/* MENU GRID */
+
+.menu-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 24px;
+}
+
+.menu-card {
+    position: relative;
+    overflow: hidden;
+    cursor: pointer;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,.12);
+    background: var(--panel);
+    box-shadow: 0 8px 25px rgba(0,0,0,.25);
+    transition: transform .3s ease, border-color .3s ease,
+                box-shadow .3s ease;
+    animation: rise .6s both;
+}
+
+.menu-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--orange);
+    box-shadow: 0 15px 35px rgba(255,140,0,.12);
+}
+
+.menu-image {
+    position: relative;
+    background: #252525;
+    overflow: hidden;
+    aspect-ratio: 3 / 4;
+}
+
+.menu-image img {
+    width: 100%;
+    height: 100%;
+    display: block;
+    object-fit: contain;
+    transition: transform .45s ease;
+}
+
+.menu-card:hover .menu-image img {
+    transform: scale(1.035);
+}
+
+.menu-number {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1;
+    background: var(--orange);
+    color: #111;
+    font-family: 'Russo One', sans-serif;
+    font-size: 11px;
+    letter-spacing: 1px;
+    padding: 8px 12px;
+    border-radius: 4px;
+    box-shadow: 0 3px 12px rgba(0,0,0,.25);
+}
+
+.view-hint {
+    position: absolute;
     inset: 0;
-    background: rgba(0,0,0,0.95);
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
-    cursor: zoom-out;
+    background: rgba(0,0,0,.30);
+    opacity: 0;
+    transition: opacity .25s ease;
 }
 
-#viewer img {
-    max-width: 95%;
-    max-height: 95%;
+.view-hint span {
+    padding: 11px 17px;
+    border: 1px solid rgba(255,255,255,.7);
+    border-radius: 30px;
+    background: rgba(0,0,0,.65);
+    color: #fff;
+    font-size: 12px;
+}
+
+.menu-card:hover .view-hint {
+    opacity: 1;
+}
+
+.card-info {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 10px;
+    padding: 15px 16px;
+}
+
+.card-info h3 {
+    margin: 0;
+    color: #fff;
+    font-family: 'Russo One', sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+}
+
+.card-info p {
+    color: #999;
+    font-size: 11px;
+    margin: 5px 0 0;
+}
+
+.open-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    width: 34px;
+    height: 34px;
+    border: 1px solid rgba(255,140,0,.4);
+    border-radius: 50%;
+    color: var(--orange);
+    font-size: 19px;
+}
+
+@keyframes rise {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* FULLSCREEN SLIDER */
+
+.viewer {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: none;
+    flex-direction: column;
+    background: rgba(8,8,8,.97);
+    backdrop-filter: blur(12px);
+}
+
+.viewer.active {
+    display: flex;
+    animation: viewerFade .2s ease;
+}
+
+@keyframes viewerFade {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.viewer-top {
+    height: 70px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 15px;
+    padding: 0 22px;
+    border-bottom: 1px solid rgba(255,255,255,.1);
+}
+
+.viewer-brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    min-width: 0;
+}
+
+.viewer-brand img {
+    width: 35px;
+    height: 35px;
+    object-fit: contain;
+    background: white;
+    border-radius: 50%;
+}
+
+.viewer-brand strong {
+    font-family: 'Russo One', sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+}
+
+.viewer-brand strong span {
+    color: var(--orange);
+}
+
+.viewer-counter {
+    color: var(--gold);
+    font-size: 13px;
+    white-space: nowrap;
+}
+
+.close-btn {
+    border: 1px solid #555;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    background: #202020;
+    color: white;
+    cursor: pointer;
+    font-size: 25px;
+    line-height: 1;
+    transition: background .2s;
+}
+
+.close-btn:hover {
+    background: #a52b21;
+}
+
+.viewer-stage {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 12px 80px;
+    overflow: hidden;
+    touch-action: pan-y;
+}
+
+.viewer-stage img {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
     width: auto;
     height: auto;
     object-fit: contain;
-    border-radius: 12px;
+    user-select: none;
+    -webkit-user-drag: none;
+    border-radius: 3px;
+    box-shadow: 0 10px 50px rgba(0,0,0,.4);
 }
 
-footer {
+.slide-btn {
+    position: absolute;
+    z-index: 2;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.2);
+    background: rgba(40,40,40,.85);
+    color: white;
+    font-size: 30px;
+    line-height: 1;
+    cursor: pointer;
+    transition: .2s;
+}
+
+.slide-btn:hover {
+    background: var(--orange);
+    color: #111;
+}
+
+.prev-btn {
+    left: 18px;
+}
+
+.next-btn {
+    right: 18px;
+}
+
+.viewer-bottom {
+    flex-shrink: 0;
+    padding: 13px 15px 20px;
     text-align: center;
-    padding: 20px;
-    color: #aaa;
-    margin-top: 30px;
-    font-size: 14px;
-    letter-spacing: 0.5px;
-    position: relative;
-    z-index: 1;
+    border-top: 1px solid rgba(255,255,255,.08);
 }
 
-@media(max-width: 480px) {
-    header {
-        font-size: 28px;
+.viewer-title {
+    font-family: 'Russo One', sans-serif;
+    font-size: 14px;
+    font-weight: normal;
+    margin-bottom: 12px;
+}
+
+.viewer-title span {
+    color: var(--orange);
+}
+
+.dots {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+.dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 10px;
+    background: #555;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width .25s, background .25s;
+}
+
+.dot.active {
+    width: 25px;
+    background: var(--orange);
+}
+
+.footer {
+    text-align: center;
+    padding: 25px 15px;
+    border-top: 1px solid rgba(255,255,255,.08);
+    color: #777;
+    font-size: 12px;
+    letter-spacing: .5px;
+}
+
+.footer span {
+    color: var(--orange);
+}
+
+/* MOBILE */
+
+@media (max-width: 800px) {
+    .menu-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 15px;
     }
 
-    .card-title {
-        font-size: 16px;
+    .section {
+        padding: 28px 14px 40px;
+    }
+
+    .menu-image {
+        aspect-ratio: 3 / 4;
+    }
+
+    .card-info {
+        padding: 12px 10px;
+    }
+
+    .card-info h3 {
+        font-size: 12px;
+    }
+
+    .card-info p {
+        font-size: 10px;
+    }
+
+    .open-icon {
+        width: 29px;
+        height: 29px;
+    }
+
+    .viewer-stage {
+        padding: 10px 45px;
+    }
+
+    .slide-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 24px;
+    }
+
+    .prev-btn {
+        left: 5px;
+    }
+
+    .next-btn {
+        right: 5px;
+    }
+
+    .viewer-top {
+        height: 58px;
+        padding: 0 12px;
+    }
+
+    .viewer-brand strong {
+        font-size: 10px;
+    }
+
+    .viewer-brand img {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+@media (max-width: 380px) {
+    .eyebrow {
+        letter-spacing: 3px;
+    }
+
+    .menu-grid {
+        gap: 10px;
+    }
+
+    .menu-number {
+        top: 8px;
+        left: 8px;
+        padding: 6px 8px;
+        font-size: 9px;
+    }
+
+    .card-info h3 {
+        font-size: 11px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
     }
 }
 </style>
@@ -128,75 +585,253 @@ footer {
 
 <body>
 
-<header>Urban Seoul Restaurant Menu</header>
+<!-- PREMIUM HEADER -->
+<header class="hero">
+    <div class="brand">
 
-<div class="menu-container">
+        <div class="logo-wrap">
+            <img src="logo.png" alt="Urban Seoul Restaurant Logo">
+        </div>
 
-    <div class="card" onclick="openViewer('Menu1.png')">
-        <img src="Menu1.png" alt="Urban Seoul Menu 1">
-        <div class="card-title">Menu 1</div>
+        <div class="eyebrow">AUTHENTIC KOREAN FLAVORS</div>
+
+        <h1>URBAN <span>SEOUL</span></h1>
+
+        <div class="subtitle">Restaurant Menu Collection</div>
+
+        <div class="orange-line"></div>
+
+    </div>
+</header>
+
+<!-- MENU GALLERY -->
+<main class="section">
+
+    <div class="section-heading">
+        <div>
+            <h2>OUR <span>MENU</span></h2>
+            <p>Explore our menu collection. Tap to view.</p>
+        </div>
+
+        <div class="menu-count">6 MENUS</div>
     </div>
 
-    <div class="card" onclick="openViewer('Menu2.png')">
-        <img src="Menu2.png" alt="Urban Seoul Menu 2">
-        <div class="card-title">Menu 2</div>
+    <div class="menu-grid" id="menuGrid"></div>
+
+</main>
+
+<!-- FACEBOOK-STYLE SLIDE VIEWER -->
+<div class="viewer" id="viewer" role="dialog"
+     aria-modal="true" aria-label="Menu photo viewer">
+
+    <div class="viewer-top">
+
+        <div class="viewer-brand">
+            <img src="logo.png" alt="">
+            <strong>URBAN <span>SEOUL</span></strong>
+        </div>
+
+        <div class="viewer-counter" id="counter">1 / 6</div>
+
+        <button class="close-btn" id="closeBtn"
+                aria-label="Close viewer">&times;</button>
+
     </div>
 
-    <div class="card" onclick="openViewer('Menu3.png')">
-        <img src="Menu3.png" alt="Urban Seoul Menu 3">
-        <div class="card-title">Menu 3</div>
+    <div class="viewer-stage" id="viewerStage">
+
+        <button class="slide-btn prev-btn" id="prevBtn"
+                aria-label="Previous menu">&#8249;</button>
+
+        <img id="viewerImage" src="" alt="Restaurant menu">
+
+        <button class="slide-btn next-btn" id="nextBtn"
+                aria-label="Next menu">&#8250;</button>
+
     </div>
 
-    <div class="card" onclick="openViewer('Menu4.png')">
-        <img src="Menu4.png" alt="Urban Seoul Menu 4">
-        <div class="card-title">Menu 4</div>
-    </div>
+    <div class="viewer-bottom">
 
-    <div class="card" onclick="openViewer('Menu5.png')">
-        <img src="Menu5.png" alt="Urban Seoul Menu 5">
-        <div class="card-title">Menu 5</div>
-    </div>
+        <div class="viewer-title" id="viewerTitle">
+            <span>MENU 1</span>
+        </div>
 
-    <div class="card" onclick="openViewer('Menu6.png')">
-        <img src="Menu6.png" alt="Urban Seoul Menu 6">
-        <div class="card-title">Menu 6</div>
+        <div class="dots" id="dots"></div>
+
     </div>
 
 </div>
 
-<div id="viewer" onclick="closeViewer()">
-    <img id="viewerImage" src="" alt="Full Menu">
-</div>
-
-<footer>
-    © 2026 Urban Seoul Restaurant • All Rights Reserved
+<footer class="footer">
+    &copy; 2026 <span>Urban Seoul Restaurant</span>
+    &bull; All Rights Reserved
 </footer>
 
 <script>
-function openViewer(image) {
-    document.getElementById('viewerImage').src = image;
-    document.getElementById('viewer').style.display = 'flex';
-}
+const menus = [
+    { image: 'Menu1.png', title: 'Menu 1' },
+    { image: 'Menu2.png', title: 'Menu 2' },
+    { image: 'Menu3.png', title: 'Menu 3' },
+    { image: 'Menu4.png', title: 'Menu 4' },
+    { image: 'Menu5.png', title: 'Menu 5' },
+    { image: 'Menu6.png', title: 'Menu 6' }
+];
 
-function closeViewer() {
-    document.getElementById('viewer').style.display = 'none';
-    document.getElementById('viewerImage').src = '';
-}
+const grid = document.getElementById('menuGrid');
+const viewer = document.getElementById('viewer');
+const viewerImage = document.getElementById('viewerImage');
+const viewerTitle = document.getElementById('viewerTitle');
+const counter = document.getElementById('counter');
+const dotsContainer = document.getElementById('dots');
+const viewerStage = document.getElementById('viewerStage');
 
-const cards = document.querySelectorAll('.card');
+let currentIndex = 0;
+let previousFocus = null;
+let touchStartX = 0;
+let touchStartY = 0;
+let touchEndX = 0;
+let touchEndY = 0;
 
-const observer = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.style.opacity = 1;
-            entry.target.style.transform = 'translateY(0)';
-            observer.unobserve(entry.target);
+/* BUILD MENU CARDS */
+menus.forEach((menu, index) => {
+    const card = document.createElement('article');
+    card.className = 'menu-card';
+    card.style.animationDelay = `${index * 0.08}s`;
+    card.tabIndex = 0;
+    card.setAttribute('role', 'button');
+    card.setAttribute('aria-label', `Open ${menu.title}`);
+
+    card.innerHTML = `
+        <div class="menu-image">
+            <span class="menu-number">
+                ${menu.title.toUpperCase()}
+            </span>
+
+            <img src="${menu.image}"
+                 alt="${menu.title}"
+                 loading="${index < 2 ? 'eager' : 'lazy'}">
+
+            <div class="view-hint">
+                <span>View Full Menu ↗</span>
+            </div>
+        </div>
+
+        <div class="card-info">
+            <div>
+                <h3>${menu.title}</h3>
+                <p>Tap to explore</p>
+            </div>
+            <span class="open-icon" aria-hidden="true">↗</span>
+        </div>
+    `;
+
+    card.addEventListener('click', () => openViewer(index));
+
+    card.addEventListener('keydown', event => {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            openViewer(index);
         }
     });
-}, { threshold: 0.2 });
 
-cards.forEach(card => observer.observe(card));
-</script>
+    grid.appendChild(card);
+});
 
-</body>
-</html>
+/* BUILD SLIDE DOTS */
+menus.forEach((menu, index) => {
+    const dot = document.createElement('button');
+    dot.className = 'dot';
+    dot.setAttribute('aria-label', `Go to ${menu.title}`);
+    dot.addEventListener('click', () => showSlide(index));
+    dotsContainer.appendChild(dot);
+});
+
+/* OPEN VIEWER */
+function openViewer(index) {
+    previousFocus = document.activeElement;
+    currentIndex = index;
+
+    viewer.classList.add('active');
+    document.body.style.overflow = 'hidden';
+
+    showSlide(currentIndex);
+    document.getElementById('closeBtn').focus();
+}
+
+/* SHOW SELECTED MENU */
+function showSlide(index) {
+    currentIndex = (index + menus.length) % menus.length;
+
+    const menu = menus[currentIndex];
+
+    viewerImage.src = menu.image;
+    viewerImage.alt = menu.title;
+
+    viewerTitle.innerHTML =
+        `<span>${menu.title.toUpperCase()}</span>`;
+
+    counter.textContent =
+        `${currentIndex + 1} / ${menus.length}`;
+
+    dotsContainer.querySelectorAll('.dot').forEach((dot, i) => {
+        dot.classList.toggle('active', i === currentIndex);
+        dot.setAttribute('aria-current',
+            i === currentIndex ? 'true' : 'false');
+    });
+}
+
+/* NEXT / PREVIOUS */
+function nextSlide() {
+    showSlide(currentIndex + 1);
+}
+
+function prevSlide() {
+    showSlide(currentIndex - 1);
+}
+
+/* CLOSE VIEWER */
+function closeViewer() {
+    viewer.classList.remove('active');
+    document.body.style.overflow = '';
+
+    viewerImage.src = '';
+
+    if (previousFocus && previousFocus.focus) {
+        previousFocus.focus();
+    }
+}
+
+document.getElementById('nextBtn').addEventListener('click', nextSlide);
+document.getElementById('prevBtn').addEventListener('click', prevSlide);
+document.getElementById('closeBtn').addEventListener('click', closeViewer);
+
+/* KEYBOARD NAVIGATION */
+document.addEventListener('keydown', event => {
+    if (!viewer.classList.contains('active')) return;
+
+    if (event.key === 'Escape') closeViewer();
+    if (event.key === 'ArrowRight') nextSlide();
+    if (event.key === 'ArrowLeft') prevSlide();
+});
+
+/* TOUCH / MOBILE SWIPE */
+viewerStage.addEventListener('touchstart', event => {
+    touchStartX = event.changedTouches[0].screenX;
+    touchStartY = event.changedTouches[0].screenY;
+    touchEndX = touchStartX;
+    touchEndY = touchStartY;
+}, { passive: true });
+
+viewerStage.addEventListener('touchmove', event => {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+}, { passive: true });
+
+viewerStage.addEventListener('touchend', event => {
+    touchEndX = event.changedTouches[0].screenX;
+    touchEndY = event.changedTouches[0].screenY;
+
+    const dx = touchEndX - touchStartX;
+    const dy = touchEndY - touchStartY;
+
+    if (Math.abs(dx)
